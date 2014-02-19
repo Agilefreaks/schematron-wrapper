@@ -23,6 +23,22 @@ module Schematron
       end
     end
 
+    def self.get_errors(validation_result)
+      result = []
+
+      document = Nokogiri::XML(validation_result) do |config|
+        config.options = Nokogiri::XML::ParseOptions::NOBLANKS | Nokogiri::XML::ParseOptions::NOENT
+      end
+
+      document.xpath('//svrl:failed-assert').each do |element|
+        result.push({message: element.xpath('./svrl:text').text.strip,
+                     role: get_attribute_value(element, '@role'),
+                     location: get_attribute_value(element, '@location')})
+      end
+
+      result
+    end
+
     private
 
     def self.process_includes(content_to_transform)

@@ -12,5 +12,16 @@ module Schematron
         temp_file.unlink
       end
     end
+
+    def get_attribute_value(element, xpath)
+      result = ''
+      attributes = element.xpath(xpath)
+
+      if attributes.size > 0
+        result = attributes.first.value
+      end
+
+      result
+    end
   end
 end
