@@ -1,4 +1,6 @@
-saxon-schematron-validation
+Schematron-wrapper
 ===========================
 
-A ruby gem that wrappers the saxon schematron implementation
+A wrapper around various schematron implementations
+
+Currently we support: saxon implementation
