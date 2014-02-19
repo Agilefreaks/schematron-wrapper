@@ -15,6 +15,14 @@ module Schematron
       create_stylesheet(temp_schematron)
     end
 
+    def self.validate(stylesheet, xml)
+      create_temp_file(stylesheet) do |temp_stylesheet|
+        create_temp_file(xml) do |temp_xml|
+          execute_transform(temp_stylesheet.path, temp_xml.path)
+        end
+      end
+    end
+
     private
 
     def self.process_includes(content_to_transform)
