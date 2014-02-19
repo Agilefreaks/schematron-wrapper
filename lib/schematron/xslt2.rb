@@ -1,6 +1,11 @@
 module Schematron
   module XSLT2
+    extend Schematron::Utils
+
     ISO_IMPL_DIR = File.join(File.dirname(__FILE__), '../..', 'iso-schematron-xslt2')
+    DSDL_INCLUDES_PATH = File.join(ISO_IMPL_DIR, 'iso_dsdl_include.xsl')
+    ABSTRACT_EXPAND_PATH = File.join(ISO_IMPL_DIR, 'iso_abstract_expand.xsl')
+    SVRL_FOR_XSLT2_PATH = File.join(ISO_IMPL_DIR, 'iso_svrl_for_xslt2.xsl')
     EXE_PATH = File.join(File.dirname(__FILE__), '../..', 'bin/saxon9he.jar')
 
     def self.compile(schematron)
@@ -12,55 +17,22 @@ module Schematron
 
     private
 
-    def self.process_includes(schematron)
-      temp_file = Tempfile.new(%w(dsdl_include .sch))
-      begin
-        temp_file.write(schematron)
-        temp_file.rewind
-
-        output = run_saxon_transform('iso_dsdl_include.xsl', temp_file.path)
-      ensure
-        temp_file.close
-        temp_file.unlink
-      end
-
-      output
+    def self.process_includes(content_to_transform)
+      create_temp_file(content_to_transform) { |temp_file| execute_transform(DSDL_INCLUDES_PATH, temp_file.path) }
     end
 
-    def self.expand_abstract_patterns(schematron)
-      temp_file = Tempfile.new(%w(abstract_expand .sch))
-      begin
-        temp_file.write(schematron)
-        temp_file.rewind
-
-        output = run_saxon_transform('iso_abstract_expand.xsl', temp_file.path)
-      ensure
-        temp_file.close
-        temp_file.unlink
-      end
-
-      output
+    def self.expand_abstract_patterns(content_to_transform)
+      create_temp_file(content_to_transform) { |temp_file| execute_transform(ABSTRACT_EXPAND_PATH, temp_file.path) }
     end
 
-    def self.create_stylesheet(schematron)
-      temp_file = Tempfile.new(%w(svrl_for_xslt2 .xsl))
-      begin
-        temp_file.write(schematron)
-        temp_file.rewind
-
-        output = run_saxon_transform('iso_svrl_for_xslt2.xsl', temp_file.path, true)
-      ensure
-        temp_file.close
-        temp_file.unlink
-      end
-
-      output
+    def self.create_stylesheet(content_to_transform)
+      create_temp_file(content_to_transform) { |temp_file| execute_transform(SVRL_FOR_XSLT2_PATH, temp_file.path, true) }
     end
 
-    def self.run_saxon_transform(stylesheet, schema, allow_foreign = false)
+    def self.execute_transform(stylesheet, schema, allow_foreign = false)
       cmd = "java -cp #{EXE_PATH} net.sf.saxon.Transform"
 
-      cmd << " -xsl:#{File.join(ISO_IMPL_DIR, stylesheet)}"
+      cmd << " -xsl:#{stylesheet}"
       cmd << " -s:#{schema}"
 
       if allow_foreign
