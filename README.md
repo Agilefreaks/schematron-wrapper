@@ -8,11 +8,18 @@ Currently we support: saxon.
 
 Java should be install in the bin PATH on the target machine.
 
-
 ## Usage
 
 ```ruby
-Schematron::XSLT2.validate(params[:stylesheet_file], params[:target_xml])
+# schematron_file - the schematron file content used for validation
+# the compilation is time consuming you might consider caching the result
+compiled_schematron = Schematron::XSLT2.compile(schematron_file)
+
+# target_xml - a file you will use to validate against
+validation_result = Schematron::XSLT2.validate(compiled_schematron, target_xml)
+
+# and finally get the errors
+errors = Schematron::XSLT2.get_errors(validation_result)
 ```
 
 Check our `spec/lib/schematron_spec.rb` for a complete example.
