@@ -1,4 +1,4 @@
-## Schematron-wrapper
+## Schematron-wrapper [![Build Status](https://travis-ci.org/Agilefreaks/schematron-wrapper.png?branch=master)](https://travis-ci.org/Agilefreaks/schematron-wrapper)
 
 A wrapper around various schematron implementations.
 
