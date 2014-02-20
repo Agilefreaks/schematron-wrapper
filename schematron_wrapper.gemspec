@@ -4,13 +4,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'schematron/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'saxon-schematron-wrapper'
+  spec.name          = 'schematron-wrapper'
   spec.version       = Schematron::VERSION
   spec.authors       = ['AgileFreaks']
   spec.email         = ['office@agilefreaks.com']
   spec.summary       = 'Schematron XSLT 2.0 validator using Saxon9-HE'
   spec.description   = ''
-  spec.homepage      = 'https://github.com/Agilefreaks/saxon-schematron-wrapper'
+  spec.homepage      = 'https://github.com/Agilefreaks/schematron-wrapper'
   spec.license       = 'Mozilla Public License, version 2.0'
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
