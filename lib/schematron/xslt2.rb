@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 module Schematron
   module XSLT2
     extend Schematron::Utils

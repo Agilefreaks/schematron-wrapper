@@ -1,3 +1,5 @@
+require 'tempfile'
+
 module Schematron
   module Utils
     def create_temp_file(content, &block)
