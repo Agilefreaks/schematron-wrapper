@@ -65,6 +65,8 @@ module Schematron
         cmd << ' allow-foreign=true'
       end
 
+      cmd << " -client -dev"
+
       %x{#{cmd}}
     end
   end
