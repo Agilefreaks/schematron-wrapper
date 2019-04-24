@@ -56,16 +56,27 @@ module Schematron
     end
 
     def self.execute_transform(stylesheet, schema, allow_foreign = false)
-      cmd = "java -cp #{EXE_PATH} net.sf.saxon.Transform"
+      cmd = "java "
+
+      # https://stackoverflow.com/questions/1491325/how-to-speed-up-java-vm-jvm-startup-time
+      cmd << " -XX:TieredStopAtLevel=1"
+      cmd << " -XX:CICompilerCount=1"
+      cmd << " -XX:+UseSerialGC"
+      cmd << " -XX:-UsePerfData"
+      cmd << " -Xshare:auto"
+      cmd << " -Xmx512m"
+
+      cmd << " -cp #{EXE_PATH} net.sf.saxon.Transform"
 
       cmd << " -xsl:#{stylesheet}"
       cmd << " -s:#{schema}"
+
 
       if allow_foreign
         cmd << ' allow-foreign=true'
       end
 
-      cmd << " -client -dev"
+      # cmd << " -client -dev"
 
       %x{#{cmd}}
     end
