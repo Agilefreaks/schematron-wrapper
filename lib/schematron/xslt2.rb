@@ -57,16 +57,16 @@ module Schematron
     end
 
     def self.execute_transform(stylesheet, schema, allow_foreign = false)
-      sep = Gem.win_platform? ? ';' : ':'
+      sep, null = Gem.win_platform? ? [';', 'nul'] : [':', '/dev/null']
       cmd = "java "
 
       # https://stackoverflow.com/questions/1491325/how-to-speed-up-java-vm-jvm-startup-time
+      # Should run `java -Xshare:dump` on the machine 
       cmd << " -XX:TieredStopAtLevel=1"
       cmd << " -XX:CICompilerCount=1"
       cmd << " -XX:+UseSerialGC"
       cmd << " -XX:-UsePerfData"
       cmd << " -Xshare:auto"
-      cmd << " -Xmx512m"
 
       cmd << " -cp #{EXE_PATH + sep + LIB_PATH + sep}. net.sf.saxon.Transform"
 
@@ -76,6 +76,8 @@ module Schematron
       if allow_foreign
         cmd << ' allow-foreign=true'
       end
+
+      cmd << " 2> #{null}" # Suppress $stderr. Should add verbose param?
 
       %x{#{cmd}}
     end
