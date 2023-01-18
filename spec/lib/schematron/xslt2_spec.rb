@@ -17,9 +17,9 @@ describe Schematron::XSLT2 do
     let(:stylesheet_file) { File.read(File.join(SAMPLES_DIR, 'compiled.xsl')) }
     let(:target_xml) { File.read(File.join(SAMPLES_DIR, 'target.xml')) }
 
-    subject { Schematron::XSLT2.validate(stylesheet_file, target_xml).gsub(/"file[^"]*/, '').gsub(/[\s]/, '') }
+    subject { Schematron::XSLT2.validate(stylesheet_file, target_xml).gsub(/file[^"]*/, '') }
 
-    it { should == File.read(File.join(SAMPLES_DIR, 'validation_result.xml')).gsub(/"file[^"]*/, '').gsub(/[\s]/, '') }
+    it { should == File.read(File.join(SAMPLES_DIR, 'validation_result.xml')).gsub(/file[^"]*/, '') }
   end
 
   describe 'get_errors' do

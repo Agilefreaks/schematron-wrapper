@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                        xmlns:saxon="http://saxon.sf.net/"
-                        xmlns:schold="http://www.ascc.net/xml/schematron"
-                        xmlns:iso="http://purl.oclc.org/dsdl/schematron"
-                        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-                        xmlns:nem="http://www.nemsis.org"
-                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                        xmlns:fct="localFunctions"
-                        title="NEMSIS Compliance Test ISO Schematron File"
-                        schemaVersion=""><!--   
-
--->
+<svrl:schematron-output xmlns:fct="localFunctions"
+                         xmlns:iso="http://purl.oclc.org/dsdl/schematron"
+                         xmlns:nem="http://www.nemsis.org"
+                         xmlns:saxon="http://saxon.sf.net/"
+                         xmlns:schold="http://www.ascc.net/xml/schematron"
+                         xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                         xmlns:xhtml="http://www.w3.org/1999/xhtml"
+                         xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                         title="NEMSIS Compliance Test ISO Schematron File"
+                         schemaVersion=""><!--   
+		   
+		   
+		 -->
    <svrl:ns-prefix-in-attribute-values uri="http://www.nemsis.org" prefix="nem"/>
    <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/1999/XSL/Transform" prefix="xsl"/>
    <svrl:ns-prefix-in-attribute-values uri="http://www.w3.org/2001/XMLSchema-instance" prefix="xsi"/>
    <svrl:ns-prefix-in-attribute-values uri="localFunctions" prefix="fct"/>
    <svrl:active-pattern document="file:/tmp/temp_file20140219-23839-6933f8"
-                        id="complianceTestStructureRule1"
-                        name="When ePatient.13 is 9906001, eHistory.18 must be 3118003."/>
+                         id="complianceTestStructureRule1"
+                         name="When ePatient.13 is 9906001, eHistory.18 must be 3118003."/>
    <svrl:fired-rule context="nem:Header/nem:PatientCareReport" role="[FATAL]"/>
    <svrl:failed-assert test="if (number($ePatient13) = 9906001) then (if (number($eHistory18) = 3118003) then true() else false()) else true()"
-                       role="[FATAL]"
-                       location="/*:EMSDataSet[namespace-uri()='http://www.nemsis.org'][1]/*:Header[namespace-uri()='http://www.nemsis.org'][1]/*:PatientCareReport[namespace-uri()='http://www.nemsis.org'][1]">
+                        role="[FATAL]"
+                        location="/*:EMSDataSet[namespace-uri()='http://www.nemsis.org'][1]/*:Header[namespace-uri()='http://www.nemsis.org'][1]/*:PatientCareReport[namespace-uri()='http://www.nemsis.org'][1]">
       <svrl:text>
         ePatient.13 - Gender is 9906001 (Female), but eHistory.18 - Pregnancy is 3118011 while it must be 3118003 (Possible, Uncomfirmed).
       </svrl:text>
    </svrl:failed-assert>
    <svrl:active-pattern document="file:/tmp/temp_file20140219-23839-6933f8"
-                        id="complianceTestStructureRule2"
-                        name="eTimes.03 - Unit Notied by Dispatch Date/Time is before eTimes.13 - Unit Back in Service Date/Time"/>
+                         id="complianceTestStructureRule2"
+                         name="eTimes.03 - Unit Notied by Dispatch Date/Time is before eTimes.13 - Unit Back in Service Date/Time"/>
    <svrl:fired-rule context="nem:Header/nem:PatientCareReport/nem:eTimes" role="[FATAL]"/>
    <svrl:failed-assert test="if (number($eTimes03All) &lt; number($eTimes13All)) then true() else false()"
-                       role="[FATAL]"
-                       location="/*:EMSDataSet[namespace-uri()='http://www.nemsis.org'][1]/*:Header[namespace-uri()='http://www.nemsis.org'][1]/*:PatientCareReport[namespace-uri()='http://www.nemsis.org'][1]/*:eTimes[namespace-uri()='http://www.nemsis.org'][1]">
+                        role="[FATAL]"
+                        location="/*:EMSDataSet[namespace-uri()='http://www.nemsis.org'][1]/*:Header[namespace-uri()='http://www.nemsis.org'][1]/*:PatientCareReport[namespace-uri()='http://www.nemsis.org'][1]/*:eTimes[namespace-uri()='http://www.nemsis.org'][1]">
       <svrl:text>
         eTimes.03 - Unit Notified by Dispatch Date/Time 2013-10-02T14:00:50+07:00 should be before eTimes.13 - Unit Back in Service Date/Time 2013-10-02T14:00:50+07:00.
       </svrl:text>
    </svrl:failed-assert>
    <svrl:active-pattern document="file:/tmp/temp_file20140219-23839-6933f8"
-                        id="complianceTestStructureRule3"
-                        name="eDispatch.01 - Complaint Reported by Dispatch must not be 2301069"/>
+                         id="complianceTestStructureRule3"
+                         name="eDispatch.01 - Complaint Reported by Dispatch must not be 2301069"/>
    <svrl:fired-rule context="nem:Header/nem:PatientCareReport/nem:eDispatch" role="[FATAL]"/>
 </svrl:schematron-output>
